@@ -1,0 +1,42 @@
+<div class="page-container">
+    <div class="top-side-container">
+        <div class="left-side-container">
+            <div class="leaderboard-container">
+                <div class="leaderboard">
+                    <div id="firstPlace" class="leadrboard-player"
+                        [ngStyle]="{'width': '95%', 'margin-block': '70px'}">
+                        <div class="leaderboard-rank">1.</div>
+                        <img class="player-icon" src="https://avatars.dicebear.com/api/identicon/{{firstPlace?.id}}.svg"
+                            class="player-icon">
+                        <div class="player-name">{{firstPlace?.name}}</div>
+                        <div class="player-score">{{firstPlace?.score}}</div>
+                    </div>
+                    <div id="secondPlace" class="leadrboard-player"
+                        [ngStyle]="{'width': '90%', 'margin-bottom': '70px'}">
+                        <div class="leaderboard-rank">2.</div>
+                        <img class="player-icon"
+                            src="https://avatars.dicebear.com/api/identicon/{{secondPlace?.id}}.svg"
+                            class="player-icon">
+                        <div class="player-name">{{secondPlace?.name}}</div>
+                        <div class="player-score">{{secondPlace?.score}}</div>
+                    </div>
+                    <div id="thirdPlace" class="leadrboard-player" [ngStyle]="{'width': '85%', 'margin-bottom': '70px'}">
+                        <div class="leaderboard-rank">3.</div>
+                        <img class="player-icon" src="https://avatars.dicebear.com/api/identicon/{{thirdPlace?.id}}.svg"
+                            class="player-icon">
+                        <div class="player-name">{{thirdPlace?.name}}</div>
+                        <div class="player-score">{{thirdPlace?.score}}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="right-side-container">
+            <div class="clock">
+                <div *ngIf="hoursLeft > 0">{{hoursLeft}}:</div>
+                <div>{{minutesLeft}}:</div>
+                <div>{{secondsLeft}}</div>
+            </div>
+            <button (click)="startCountdown()">Start Timer</button>
+        </div>
+    </div>
+</div>

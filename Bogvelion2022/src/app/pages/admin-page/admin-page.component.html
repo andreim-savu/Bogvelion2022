@@ -1,0 +1,7 @@
+<p>admin-page works!</p>
+<div class="clock">
+    <div *ngIf="hoursLeft > 0">{{hoursLeft}}:</div>
+    <div>{{minutesLeft}}:</div>
+    <div>{{secondsLeft}}</div>
+</div>
+<button (click)="addFiveMinutes()">Add 5 mins</button>
