@@ -18,26 +18,10 @@ export class LandingPageComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  addPlayer(playerName: HTMLInputElement): void {
-    if (!playerName) { return; }
-    let newPlayer: IPlayer = {
-      id: crypto.randomUUID(),
-      name: playerName.value,
-      score: 0
-    }
-    playerName.value = "";
-    this.players.push(newPlayer);
-  }
-
-  generateRandomId(): string {
-    let id = Math.floor(Math.random() * 10000);
-    return id.toString();
-  }
-
   createRoom(): void {
     this.firestore.collection('rooms').add({
-      players: this.players,
-      status: "Lobby"
+      players: [],
+      status: "Starting"
     }).then((docRef) => {
       this.router.navigate(["/lobby/" + docRef.id]);
     });

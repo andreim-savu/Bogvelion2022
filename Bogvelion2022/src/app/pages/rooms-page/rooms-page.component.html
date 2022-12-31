@@ -1,0 +1,22 @@
+<div *ngIf="!isRoomSelected" class="page-container">
+    <div class="title">Bogvelion 2022</div>
+    <div class="rooms-container">
+        <div *ngFor="let room of rooms" class="room" (click)="selectRoom(room.id)">
+            {{room.id}}
+        </div>
+    </div>
+</div>
+<div *ngIf="isRoomSelected" class="page-container">
+    <div class="title">Bogvelion 2022</div>
+    <div class="players-container">
+        <div class="player-container" *ngFor="let player of players">
+            <img src="https://avatars.dicebear.com/api/identicon/{{player.id}}.svg" class="player-icon">
+            <div class="player-name">{{player?.name}}</div>
+        </div>
+        <div class="add-player-container">
+            <div class="add-player-icon" (click)="addPlayer(playerName)">+</div>
+            <input #playerName type="text" class="add-player-input">
+        </div>
+    </div>
+    <button (click)="startRoom()">Start</button>
+</div>

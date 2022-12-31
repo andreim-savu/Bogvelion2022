@@ -1,0 +1,86 @@
+.page-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-width: 350px;
+    margin-inline: auto;
+    margin-top: 40px;
+
+    padding: 20px 30px;
+    background-color: var(--secondary);
+    box-shadow: 0px 2px 5px 3px var(--accents);
+    border-radius: 10px;
+
+    .title {
+        font-weight: bold;
+    }
+
+    .players-container {
+        width: 100%;
+        margin-block: 20px;
+
+        .player-container {
+            display: flex;
+            align-items: center;
+            height: 50px;
+            border: 1px solid var(--accents);
+            margin-bottom: 10px;
+            border-radius: 5px;
+            box-shadow: 0px 0px 5px 3px var(--accents);
+
+            padding-inline: 15px;
+
+            .player-icon {
+                height: 30px;
+                width: 30px;
+                margin-right: 15px;
+            }
+        }
+
+        .add-player-container {
+            display: flex;
+            align-items: center;
+            height: 50px;
+            border: 1px dashed var(--accents);
+            border-radius: 5px;
+            box-shadow: 0px 0px 5px 3px var(--accents);
+
+            padding-inline: 15px;
+
+            .add-player-icon {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                color: var(--extra);
+                font-weight: bold;
+                font-size: 24px;
+                height: 30px;
+                width: 30px;
+                margin-right: 15px;
+                border-radius: 5px;
+                background-color: var(--accents);
+                box-shadow: 0px 0px 3px 2px var(--extra);
+            }
+        }
+    }
+
+    .rooms-container {
+        margin-top: 20px;
+        
+        .room {
+            display: flex;
+            align-items: center;
+            height: 50px;
+            border: 1px solid var(--accents);
+            margin-bottom: 10px;
+            border-radius: 5px;
+            box-shadow: 0px 0px 5px 3px var(--accents);
+            padding-inline: 15px;
+            cursor: pointer;
+            transition: all 0.25s ease;
+        }
+        .room:is(:hover, :active) {
+            background-color: var(--accents);
+        }
+    }
+}

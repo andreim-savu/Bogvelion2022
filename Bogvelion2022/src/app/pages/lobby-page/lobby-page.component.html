@@ -1,42 +1,78 @@
-<div class="page-container">
-    <div class="top-side-container">
-        <div class="left-side-container">
-            <div class="leaderboard-container">
-                <div class="leaderboard">
-                    <div id="firstPlace" class="leadrboard-player"
-                        [ngStyle]="{'width': '95%', 'margin-block': '70px'}">
-                        <div class="leaderboard-rank">1.</div>
-                        <img class="player-icon" src="https://avatars.dicebear.com/api/identicon/{{firstPlace?.id}}.svg"
-                            class="player-icon">
-                        <div class="player-name">{{firstPlace?.name}}</div>
-                        <div class="player-score">{{firstPlace?.score}}</div>
-                    </div>
-                    <div id="secondPlace" class="leadrboard-player"
-                        [ngStyle]="{'width': '90%', 'margin-bottom': '70px'}">
-                        <div class="leaderboard-rank">2.</div>
-                        <img class="player-icon"
-                            src="https://avatars.dicebear.com/api/identicon/{{secondPlace?.id}}.svg"
-                            class="player-icon">
-                        <div class="player-name">{{secondPlace?.name}}</div>
-                        <div class="player-score">{{secondPlace?.score}}</div>
-                    </div>
-                    <div id="thirdPlace" class="leadrboard-player" [ngStyle]="{'width': '85%', 'margin-bottom': '70px'}">
-                        <div class="leaderboard-rank">3.</div>
-                        <img class="player-icon" src="https://avatars.dicebear.com/api/identicon/{{thirdPlace?.id}}.svg"
-                            class="player-icon">
-                        <div class="player-name">{{thirdPlace?.name}}</div>
-                        <div class="player-score">{{thirdPlace?.score}}</div>
+<div *ngIf="!status || status ==='Starting'" class="page-container">
+    <div class="wait-text">
+        <div>Please Wait</div>
+        <div class="wait-dot">.</div>
+        <div class="wait-dot">.</div>
+        <div class="wait-dot">.</div>
+    </div>
+</div>
+<div *ngIf="status ==='Lobby'" class="page-container">
+    <div class="title">Bogvelion 2022</div>
+    <div>
+        <div class="top-side-container">
+            <div class="left-side-container">
+                <div class="leaderboard-container">
+                    <div class="leaderboard">
+                        <div id="firstPlace" class="leadrboard-player"
+                            [ngStyle]="{'width': '95%', 'margin-block': '70px'}">
+                            <div class="leaderboard-rank">1.</div>
+                            <img class="player-icon"
+                                src="https://avatars.dicebear.com/api/identicon/{{firstPlace?.id}}.svg"
+                                class="player-icon">
+                            <div class="player-name">{{firstPlace?.name}}</div>
+                            <div class="player-score">{{firstPlace?.score}}</div>
+                        </div>
+                        <div id="secondPlace" class="leadrboard-player"
+                            [ngStyle]="{'width': '90%', 'margin-bottom': '70px'}">
+                            <div class="leaderboard-rank">2.</div>
+                            <img class="player-icon"
+                                src="https://avatars.dicebear.com/api/identicon/{{secondPlace?.id}}.svg"
+                                class="player-icon">
+                            <div class="player-name">{{secondPlace?.name}}</div>
+                            <div class="player-score">{{secondPlace?.score}}</div>
+                        </div>
+                        <div id="thirdPlace" class="leadrboard-player"
+                            [ngStyle]="{'width': '85%', 'margin-bottom': '70px'}">
+                            <div class="leaderboard-rank">3.</div>
+                            <img class="player-icon"
+                                src="https://avatars.dicebear.com/api/identicon/{{thirdPlace?.id}}.svg"
+                                class="player-icon">
+                            <div class="player-name">{{thirdPlace?.name}}</div>
+                            <div class="player-score">{{thirdPlace?.score}}</div>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="right-side-container">
-            <div class="clock">
-                <div *ngIf="hoursLeft > 0">{{hoursLeft}}:</div>
-                <div>{{minutesLeft}}:</div>
-                <div>{{secondsLeft}}</div>
+            <div class="right-side-container">
+                <div class="clock">
+                    <div *ngIf="hoursLeft > 0 && countdownTo > 0">{{hoursLeft}}:</div>
+                    <div *ngIf="countdownTo > 0">{{minutesLeft}}:</div>
+                    <div *ngIf="countdownTo > 0">{{secondsLeft}}</div>
+                    <div *ngIf="countdownTo === 0" style="text-align: center;">Please Wait</div>
+                </div>
             </div>
-            <button (click)="startCountdown()">Start Timer</button>
+        </div>
+    </div>
+</div>
+<div *ngIf="status ==='PickGame'" class="page-container">
+    <div class="title">Bogvelion 2022</div>
+    <div class="games-container">
+        <div *ngFor="let game of validGames" class="game-container">
+            <div>{{game.name}}</div>
+            <div>{{game.playersPerTeam}}</div>
+        </div>
+    </div>
+</div>
+<div *ngIf="status ==='InGame'" class="page-container">
+    <div class="title">Bogvelion 2022</div>
+    <div class="game-title">{{currentGame.name!}}</div>
+        <div class="teams-container">
+        <div *ngFor="let team of currentTeams, let i = index" class="team-container">
+            <div class="team-title">Team {{i + 1}}</div>
+            <div *ngFor="let player of team" class="team-member">
+                <img src="https://avatars.dicebear.com/api/identicon/{{player.id}}.svg" class="player-icon">
+                <div class="player-name">{{player?.name}}</div>
+            </div>
         </div>
     </div>
 </div>

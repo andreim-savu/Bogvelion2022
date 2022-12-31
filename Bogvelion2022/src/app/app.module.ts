@@ -10,13 +10,15 @@ import { AppComponent } from './app.component';
 import { LandingPageComponent } from './pages/landing-page/landing-page.component';
 import { LobbyPageComponent } from './pages/lobby-page/lobby-page.component';
 import { AdminPageComponent } from './pages/admin-page/admin-page.component';
+import { RoomsPageComponent } from './pages/rooms-page/rooms-page.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LandingPageComponent,
     LobbyPageComponent,
-    AdminPageComponent
+    AdminPageComponent,
+    RoomsPageComponent
   ],
   imports: [
     BrowserModule,
