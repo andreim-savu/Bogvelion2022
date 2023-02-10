@@ -15,12 +15,14 @@ export class LobbyPageComponent implements OnInit {
 
   players: IPlayer[] = [];
   currentTeams: IPlayer[][] = [];
-  currentGame = {
+  currentGame: IGame = {
     name: "",
     playersPerTeam: 0,
-    evenTeams: false
+    evenTeams: false,
+    description: "",
+    gamePlayed: false
   };
-  validGames: IGame[] = [];
+  allGames: IGame[] = [];
 
   firstPlace: IPlayer | null = null;
   secondPlace: IPlayer | null = null;
@@ -34,12 +36,14 @@ export class LobbyPageComponent implements OnInit {
   timerInterval: any;
 
   status: string = "";
+  gamePicked: boolean = false;
 
   constructor(private firestore: AngularFirestore, private router: Router) { }
 
   ngOnInit(): void {      
     this.firestore.collection('rooms').doc(this.id).valueChanges().subscribe((res) => {
       this.getRoomInfo();
+      this.randomGame();
     });
   }
 
@@ -52,8 +56,8 @@ export class LobbyPageComponent implements OnInit {
       this.countdownTo = parseInt(data.countdownTo);
       this.status = data.status;
       this.currentTeams = data.currentTeams ? JSON.parse(data.currentTeams) : [];
+      this.allGames = data.allGames;
       this.currentGame = data.currentGame;
-      this.validGames = data.validGames;
       console.log(this.status);
       console.log(data.countdownTo);
       this.setLeaderboard();
@@ -110,5 +114,36 @@ export class LobbyPageComponent implements OnInit {
 
   startGame() {
     
+  }
+
+  randomGame() {
+    let games = document.getElementsByClassName('game-container');
+
+
+    setTimeout(() => {
+      this.randomGamePickRandomGame(games, 100);
+    }, 1000);
+  }
+
+  randomGamePickRandomGame(games: any, attempts: number) {
+    if (attempts === 0) { 
+      this.gamePicked = true;
+      return; 
+    }
+    attempts -= 1;
+    setTimeout(() => {
+      let randomIndex = Math.floor(Math.random() * games.length);
+  
+      for (let i = 0; i < games.length; i++) {
+        if (i === randomIndex) {
+          games[i].classList.add('selected');
+        }
+        else {
+          games[i].classList.remove('selected');
+        }
+      }
+
+      this.randomGamePickRandomGame(games, attempts);
+    }, 100);
   }
 }

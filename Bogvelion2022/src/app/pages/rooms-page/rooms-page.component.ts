@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { Router } from '@angular/router';
 import { IPlayer } from 'src/app/interfaces/player';
@@ -11,6 +11,8 @@ import { IRoom } from 'src/app/interfaces/room';
 })
 export class RoomsPageComponent implements OnInit {
 
+  @ViewChild('playersContainer')
+  private playersContainer!: ElementRef;
   players: IPlayer[] = [];
   rooms: any[] = [];
 
@@ -26,7 +28,7 @@ export class RoomsPageComponent implements OnInit {
     });
   }
 
-  getRooms(): void{
+  getRooms(): void {
     this.rooms = [];
 
     this.firestore.collection('rooms').get().subscribe((res) => {
@@ -53,34 +55,60 @@ export class RoomsPageComponent implements OnInit {
   addPlayer(playerName: HTMLInputElement): void {
     if (!playerName) { return; }
     let newPlayer: IPlayer = {
-      id: crypto.randomUUID(),
+      id: this.generateRandomId(),
       name: playerName.value,
       score: 0
     }
     playerName.value = "";
     this.players.push(newPlayer);
+    setTimeout(() => {
+      this.playersContainer.nativeElement.scrollTop = this.playersContainer.nativeElement.scrollHeight;
+    }, 10);
+  }
+
+  randomIcon(player: any) {
+    player.id = this.generateRandomId();
   }
 
   generateRandomId(): string {
-    let id = Math.floor(Math.random() * 10000);
-    return id.toString();
+    const characters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+    let id = "";
+
+    for (let i = 0; i < 19; i++) {
+      if ((i + 1) % 5 === 0) {
+        id += "-";
+        continue;
+      }
+
+      id += characters[Math.floor(Math.random() * characters.length)];
+    }
+    console.log(id);
+    return id;
   }
 
   startRoom(): void {
-    this.firestore.collection('rooms').doc(this.roomId).update({
-      players: this.players,
-      countdownTo: new Date().getTime() + 30 * 60000,
-      status: "Lobby",
-      currentTeams: "[]",
-      currentGame: {
-        name: "",
-        playersPerTeam: 0,
-        evenTeams: false
-      },
-      validGames: [],
-      participatingPlayers: []
-    });
+    let games: unknown[] = [];
+    this.firestore.collection('games').ref.get().then(res => {
+      for (let doc of res.docs) {
+        games.push(doc.data());
+      }
 
-    this.router.navigate(["/admin/" + this.roomId]);
+      this.firestore.collection('rooms').doc(this.roomId).update({
+        players: this.players,
+        countdownTo: new Date().getTime() + 30 * 60000,
+        status: "Lobby",
+        allGames: games,
+        currentTeams: "[]",
+        currentGame: {
+          name: "",
+          playersPerTeam: 0,
+          evenTeams: false,
+          gamePlayed: false
+        },
+        participatingPlayers: []
+      });
+
+      this.router.navigate(["/admin/" + this.roomId]);
+    });
   }
 }

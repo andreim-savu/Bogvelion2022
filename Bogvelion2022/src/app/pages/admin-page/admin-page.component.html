@@ -1,28 +1,6 @@
 <div class="page-container">
-    <div class="title">Bogvelion 2022</div>
+    <div class="title">Adina Party</div>
     <div *ngIf="roomLoaded && roomData.status === 'Lobby'">
-        <div *ngIf="roomData.countdownTo > 0" class="players-container">
-            <div class="player-container" *ngFor="let player of roomData.players">
-                <img src="https://avatars.dicebear.com/api/identicon/{{player.id}}.svg" class="player-icon">
-                <div class="player-name">{{player?.name}}</div>
-                <div class="player-score">{{player?.score}}</div>
-            </div>
-            <div class="add-player-container">
-                <div class="add-player-icon" (click)="addPlayer(playerName)">+</div>
-                <input #playerName type="text" class="add-player-input">
-            </div>
-        </div>
-        <div *ngIf="roomData.countdownTo === 0" class="players-container">
-            <div class="player-container pointer" *ngFor="let player of roomData.players" (click)="toggleGamePlayer(player)"
-                [ngClass]="{'selected': isParticipatinPlayer(player)}">
-                <img src="https://avatars.dicebear.com/api/identicon/{{player.id}}.svg" class="player-icon">
-                <div class="player-name">{{player?.name}}</div>
-                <div class="player-score">{{player?.score}}</div>
-            </div>
-            <div class="button-wrapper">
-                <button (click)="getValidGames()">Start</button>
-            </div>
-        </div>
         <div class="clock">
             <div *ngIf="hoursLeft > 0">{{hoursLeft}}:</div>
             <div>{{minutesLeft}}:</div>
@@ -39,15 +17,47 @@
             </div>
             <button class="start-button" (click)="startNow()">Start Now</button>
         </div>
-    </div>
-    <div *ngIf="roomLoaded && roomData.status === 'PickGame'" class="game-title">Choose Game</div>
-    <div *ngIf="roomLoaded && roomData.status === 'PickGame'" class="games-container">
-        <div *ngFor="let game of roomData.validGames" class="game-container" (click)="selectGame(game)">
-            <div>{{game.name}}</div>
-            <div>{{game.playersPerTeam}}</div>
+        <div *ngIf="selectedPlayer">
+            <div class="selected-player-container">
+                <img src="https://avatars.dicebear.com/api/identicon/{{selectedPlayer.id}}.svg" class="player-icon">
+                <div class="player-name">{{selectedPlayer?.name}}</div>
+                <div class="player-score">{{selectedPlayer?.score}}</div>
+            </div>
+            <div class="buttons-container">
+                <div class="input-button">
+                    <input #newScore>
+                    <button (click)="setNewScore(newScore)">Set Score</button>
+                </div>
+            </div>
         </div>
+        <div *ngIf="roomData.countdownTo > 0" class="players-container">
+            <div class="player-container pointer" *ngFor="let player of roomData.players" (click)="selectPlayerForScore(player)">
+                <img src="https://avatars.dicebear.com/api/identicon/{{player.id}}.svg" class="player-icon">
+                <div class="player-name">{{player?.name}}</div>
+                <div class="player-score">{{player?.score}}</div>
+            </div>
+            <div class="add-player-container">
+                <div class="add-player-icon" (click)="addPlayer(playerName)">+</div>
+                <input #playerName type="text" class="add-player-input">
+            </div>
+        </div>
+        <div *ngIf="roomData.countdownTo === 0" class="players-container">
+            <div class="player-container pointer" *ngFor="let player of roomData.players"
+                (click)="toggleGamePlayer(player)" [ngClass]="{'selected': isParticipatinPlayer(player)}">
+                <img src="https://avatars.dicebear.com/api/identicon/{{player.id}}.svg" class="player-icon">
+                <div class="player-name">{{player?.name}}</div>
+                <div class="player-score">{{player?.score}}</div>
+            </div>
+            <div class="button-wrapper">
+                <button (click)="startGame2()">Start</button>
+            </div>
+        </div>
+    </div>
+    <div *ngIf="roomLoaded && roomData.status === 'PickGame'" class="game-title">{{roomData.currentGame.name}}</div>
+    <div *ngIf="roomLoaded && roomData.status === 'PickGame'" class="games-container">
         <div class="button-wrapper">
-            <button (click)="endGame()">Go Back</button>
+            <button (click)="startGame()">Start</button>
+            <button (click)="endGame(false)">Go Back</button>
         </div>
     </div>
     <div *ngIf="roomLoaded && roomData.status === 'InGame'" class="game-title">{{roomData.currentGame.name}}</div>
@@ -64,7 +74,7 @@
         </div>
         <div class="button-wrapper">
             <button (click)="setScores()">End</button>
-            <button (click)="endGame()">Go Back</button>
+            <button (click)="endGame(false)">Go Back</button>
         </div>
     </div>
 </div>

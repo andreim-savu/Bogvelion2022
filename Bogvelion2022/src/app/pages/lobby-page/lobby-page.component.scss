@@ -1,4 +1,6 @@
 .page-container {
+    height: 100vh;
+
     .game-title {
         font-weight: bold;
         color: var(--secondary);
@@ -7,6 +9,7 @@
         text-align: center;
         margin-block: 20px;
     }
+
     .wait-text {
         display: flex;
         justify-content: center;
@@ -21,7 +24,7 @@
         div {
             margin-inline: 5px;
         }
-        
+
         :nth-child(2) {
             animation-name: dot1;
             animation-duration: 2000ms;
@@ -34,16 +37,18 @@
             animation-duration: 2000ms;
             animation-iteration-count: infinite;
             animation-timing-function: step-end;
-            
+
         }
+
         :nth-child(4) {
             animation-name: dot3;
             animation-duration: 2000ms;
             animation-iteration-count: infinite;
             animation-timing-function: step-end;
         }
+
         @keyframes dot1 {
-            0%{
+            0% {
                 opacity: 0;
             }
 
@@ -53,7 +58,7 @@
         }
 
         @keyframes dot2 {
-            0%{
+            0% {
                 opacity: 0;
             }
 
@@ -63,7 +68,7 @@
         }
 
         @keyframes dot3 {
-            0%{
+            0% {
                 opacity: 0;
             }
 
@@ -72,6 +77,7 @@
             }
         }
     }
+
     .top-side-container {
         display: flex;
         height: 60%;
@@ -83,7 +89,7 @@
             .leaderboard-container {
                 width: 900px;
                 margin-inline: 30px;
-                background-color: var(--secondary);
+                background-color: var(--main);
                 padding-left: 20px;
                 border-radius: 15px;
                 box-shadow: 0px 2px 5px 3px var(--accents);
@@ -96,11 +102,11 @@
                         display: flex;
                         align-items: center;
                         position: relative;
-                        border: 3px solid var(--extra);
+                        border: 1px solid var(--accents);
+                        box-shadow: 0 0 5px 0 var(--accents);
                         padding-inline: 30px;
-                    
+
                         height: 80px;
-                        box-shadow: 0px 8px 3px 5px var(--extra);
 
                         .leaderboard-rank {
                             font-weight: bold;
@@ -127,12 +133,14 @@
                 }
             }
         }
+
         .right-side-container {
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
             flex-grow: 1;
+
             .clock {
                 display: flex;
                 font-size: 250px;
@@ -142,17 +150,20 @@
             }
         }
     }
+
     .teams-container {
         display: flex;
         flex-wrap: wrap;
         justify-content: center;
         margin-block: 20px;
+
         .team-container {
-            background-color: var(--secondary);
+            background-color: var(--main);
             border-radius: 5px;
             box-shadow: 0px 0px 5px 3px var(--accents);
             padding: 10px;
             margin: 10px;
+
             .team-title {
                 text-align: center;
                 font-weight: bold;
@@ -160,6 +171,7 @@
                 margin-bottom: 10px;
                 text-decoration: underline;
             }
+
             .team-member {
                 display: flex;
                 width: 250px;
@@ -171,7 +183,7 @@
                 margin-bottom: 10px;
                 border-radius: 5px;
                 box-shadow: 0px 0px 5px 3px var(--accents);
-    
+
                 padding-inline: 15px;
 
                 .player-icon {
@@ -185,37 +197,120 @@
                     margin-left: auto;
                 }
             }
+
             .fake-button {
                 display: none;
             }
         }
     }
+
     .games-container {
         display: flex;
-        flex-wrap: wrap;
         justify-content: center;
-        margin-block: 40px;
+        flex-wrap: wrap;
+        width: 40%;
+        margin-top: 60px;
+        margin-inline: auto;
 
         .game-container {
             display: flex;
-            justify-content: space-between;
+            justify-content: center;
             align-items: center;
-            font-weight: bold;
-            width: 200px;
-            height: 50px;
-            background-color: var(--secondary);
-            border-radius: 5px;
+            background-color: var(--main);
+            border: 1px solid var(--accents);
             box-shadow: 0px 0px 5px 3px var(--accents);
-            padding: 10px;
-            margin: 10px;
+            height: 50px;
+            width: 200px;
+            margin: 15px;
+            animation: 10s ease-out 1.5s 1 fadeGameContainer forwards;
+
+            &.selected {
+                background-color: var(--accents);
+            }
+        }
+
+        @keyframes fadeGameContainer {
+            0% {
+                opacity: 1;
+            }
+
+            70% {
+                height: 50px;
+                width: 200px;
+            }
+
+            100% {
+                height: 60px;
+                width: 210px;
+                opacity: 0;
+            }
+        }
+    }
+
+    .description-container {
+        background-color: var(--main);
+        border: 1px solid var(--accents);
+        box-shadow: 0px 0px 5px 3px var(--accents);
+        width: 650px;
+        height: 480px;
+        margin-inline: auto;
+        margin-top: 60px;
+        padding: 30px;
+        transition: all 1s ease-in;
+        animation: 1.5s ease-out 0s 1 slideInFromRight forwards;
+
+        .description-title {
+            font-size: 32px;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        .description-players {
+            font-size: 20px;
+            text-align: center;
+            margin-block: 10px;
+        }
+
+        .description-description {
+            margin-top: 25px;
+        }
+    }
+
+    @keyframes slideInFromRight {
+        0% {
+            width: calc(650px * 1.1);
+            height: calc(480px * 1.1);
+            opacity: 0.3;
+        }
+
+        100% {
+            width: 650px;
+            height: 480px;
+            opacity: 1;
         }
     }
 }
+
 .title {
     font-weight: bold;
     color: var(--secondary);
     font-size: 150px;
     text-shadow: 2px 2px black;
     text-align: center;
-    margin-block: 20px;
+    margin-bottom: 20px;
+}
+
+.bg {
+    position: fixed;
+    height: 100vh;
+    width: 100%;
+    z-index: -10;
+    box-sizing: border-box;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+
+    &.cakeb {
+        background-image: url('../../../../src/assets/cake-bg.jpg');
+    }
 }

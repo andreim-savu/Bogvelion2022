@@ -7,7 +7,8 @@
     </div>
 </div>
 <div *ngIf="status ==='Lobby'" class="page-container">
-    <div class="title">Bogvelion 2022</div>
+    <div class="bg" style="background-image: url('assets/lobby-bg.jpg')"></div>
+    <div class="title">Adina Party</div>
     <div>
         <div class="top-side-container">
             <div class="left-side-container">
@@ -55,18 +56,22 @@
     </div>
 </div>
 <div *ngIf="status ==='PickGame'" class="page-container">
-    <div class="title">Bogvelion 2022</div>
-    <div class="games-container">
-        <div *ngFor="let game of validGames" class="game-container">
-            <div>{{game.name}}</div>
-            <div>{{game.playersPerTeam}}</div>
-        </div>
+    <div class="bg" style="background-image: url('assets/frame-bg.jpg')"></div>
+    <div class="title">Adina Party</div>
+    <div *ngIf="!gamePicked" class="games-container">
+        <div *ngFor="let game of allGames" class="game-container">{{game.name}}</div>
+    </div>
+    <div *ngIf="gamePicked" class="description-container">
+        <div class="description-title">{{currentGame.name}}</div>
+        <div class="description-players">Players per team: {{currentGame.playersPerTeam}}</div>
+        <div class="description-description">{{currentGame.description}}</div>
     </div>
 </div>
 <div *ngIf="status ==='InGame'" class="page-container">
-    <div class="title">Bogvelion 2022</div>
+    <div class="bg" style="background-image: url('assets/cupcake-bg.jpg')"></div>
+    <div class="title">Adina Party</div>
     <div class="game-title">{{currentGame.name!}}</div>
-        <div class="teams-container">
+    <div class="teams-container">
         <div *ngFor="let team of currentTeams, let i = index" class="team-container">
             <div class="team-title">Team {{i + 1}}</div>
             <div *ngFor="let player of team" class="team-member">

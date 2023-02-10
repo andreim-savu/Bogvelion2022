@@ -6,7 +6,7 @@ export interface IRoom {
     players: IPlayer[];
     status: string;
     currentTeams: IPlayer[][];
-    validGames: IGame[];
+    allGames: IGame[];
     currentGame: IGame;
     participatingPlayers: IPlayer[];
 }

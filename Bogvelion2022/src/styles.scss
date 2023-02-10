@@ -1,23 +1,58 @@
 /* You can add global styles to this file, and also import other style files */
 
 :root {
-    --main: #EB455F;
-    --secondary: #FCFFE7;
-    --accents: #BAD7E9;
-    --extra: #2B3467;
+    --main: #272643;
+    --secondary: #EBEBF0;
+    --secondary-transparent: #EBEBF080;
+    --accents: #BAE8E8;
+    --extra: #2C698D;
 }
 
 html, body {
+    color: var(--secondary);
     padding: 0;
     margin: 0;
-    background-color: var(--main);
-    background-image: url('assets/background.png');
-    background-repeat: no-repeat;
-    background-attachment: fixed;
-    background-size: cover;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
 
+html {
+    min-height: 100%;
+    background: linear-gradient(0deg, rgba(31,31,31,1) 0%, rgba(45,45,56,1) 100%);
 }
 
 * {
     box-sizing: border-box;
+}
+
+button {
+    font-size: 18px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    background-color: var(--accents);
+    border: 1px solid var(--accents);
+    box-shadow: 0 0 5px 0 var(--accents);
+    color: var(--extra);
+    border-radius: 30px;
+    padding: 10px 55px;
+    text-align: center;
+    cursor: pointer;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: var(--secondary);
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #691496;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: #41105c;
 }
